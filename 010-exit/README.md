@@ -43,6 +43,16 @@ start of the program.
 
 A list of assembler directives is available at https://sourceware.org/binutils/docs/as/Pseudo-Ops.html.
 
+In this program we can see that specific (immediate) values can be specified
+in the assembly code by preceding them with a `#` character.  This is seen
+in the line:
+
+```asm
+mov     x0, #0
+```
+
+which loads the value `0` into the `x0` register.
+
 The end of the program is signalled to the OS by the `svc` instruction
 system call.  Syscall `93` invokes the equivalent of the
 C `exit(int)` function.  (More precisely, an `exit(int)` call in C
