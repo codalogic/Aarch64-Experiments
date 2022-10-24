@@ -65,7 +65,8 @@ To run the program do:
 ```
 
 Using the bash script mentioned in the
-[README for the top-level of this tutorial](../) this can be also done using:
+[README for the top-level of this tutorial](https://github.com/codalogic/Aarch64-Experiments)
+this can be also done using:
 
 ```bash
 ../aarch64 exit
