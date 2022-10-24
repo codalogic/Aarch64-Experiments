@@ -3,3 +3,5 @@
 
 # Explicit executables to ignore
 exit
+sys-write
+write
