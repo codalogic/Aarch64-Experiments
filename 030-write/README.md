@@ -1,7 +1,7 @@
 write - Writing text to  the screen again
 =========================================
 
-Writing text to the screen usig a syscall works but it's not ideal.
+Writing text to the screen using a syscall works but it's not ideal.
 For example, we don't want to have to keep remembering the correct syscall
 number each time we want to do it.
 
