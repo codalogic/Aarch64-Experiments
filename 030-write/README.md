@@ -77,7 +77,7 @@ All that remains now is to return from the subroutine using a `ret` instruction:
 ret
 ```
 
-Note that this is a minimalist implementation for a subroutine that doesn't call other
+IMPORTANT NOTE: This is a minimalist implementation for a subroutine that doesn't call other
 subroutines.  Subroutines that do call other subroutines need to do a little more housekeeping
 and I'll cover that in a future exercise.
 
@@ -125,8 +125,8 @@ _write:
 
     // To make the syscall we have to move the subroutine's input
     // parameters into the right registers for the syscall
-    mov     x2, x1      // count = len
-    mov     x1, x0      // buf = msg
+    mov     x2, x1      // x1 -> x2
+    mov     x1, x0      // x0 -> x1
 
     // We should return from this function with x8 unchanged.
     // Step 1 of achieving this is to push it onto the stack
