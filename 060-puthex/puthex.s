@@ -16,7 +16,7 @@ puthex:
 
     // We need x0 and x1 to call subroutines so put input x0
     // somewhere safe
-    str     x11, [sp,#-16]!
+    stp     x11, x12, [sp,#-16]!
     mov     x11, x0
 
     // Print "0x" to make it clear it's a hex value
@@ -26,7 +26,7 @@ puthex:
 
     // If the input value is 0, print "00" then jump to return
     cmp     x11, 0
-    bne     .L_puthex_1
+    b.ne    .L_puthex_1
     mov     x0, #'0'
     bl      putc
     mov     x0, #'0'
@@ -46,7 +46,7 @@ puthex:
     // branch to display it, else shift in the next byte
     // and decrement the loop count
     tst     x11, #0x0f
-    bne     .L_puthex_3
+    b.ne    .L_puthex_3
 
     lsr     x11, x11, #8
     subs    x12, x12, 1
@@ -70,7 +70,7 @@ puthex:
     bne     .L_puthex_3
 
 .L_puthex_exit:
-    ldr     x11, [sp]
+    ldp     x11, x12, [sp]
     mov     sp, fp
     ldp     fp, lr, [sp], #16
     ret
