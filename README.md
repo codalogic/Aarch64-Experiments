@@ -33,6 +33,24 @@ For example, to build the code in the first example, which is called `exit`, do:
 aarch64 exit
 ```
 
+## Overview of Aarch64
+
+The Arm 64-bit architecture as 31 64-bit registers named `x0` to `x30`.  32-bit operations 
+can be done on these registers by referring to the registers as `w0` to `w30`.
+
+The stack pointer and the zero register take the place of what would be `x31`.  Depending on the
+instrution used, when the instruction encodes register `11111` (31) either the stack pointer or the zero
+register will be accessed.
+
+The zero register allows instructs to have zero valued inputs and to be able to discard
+results of computations.  For example, register to register `mov` instructions are done
+by adding (via `add`) the zero register to a register and storing the result in the target register.
+`cmp` comparison instructions are performed by subtracting the content of two registers
+and storing the result to the zero register, thus discarding it.
+
+The architecture also has 32 128-bit floating point registers, some 'house keeping' registers
+and the option of vector processor registers.  These are not discussed in this tutorial.
+
 ## Useful Resources
 
 Learn the architecture - AArch64 Instruction Set Architecture - https://documentation-service.arm.com/static/62d02ce031ea212bb66273fe?token=
