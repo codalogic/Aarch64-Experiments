@@ -5,3 +5,8 @@
 exit
 sys-write
 write
+putcx2
+putc
+puthex
+strlen
+puts
