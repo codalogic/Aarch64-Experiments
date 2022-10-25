@@ -151,20 +151,27 @@ exit:
 
 // The start of the code
 _start:
+    mov     x0, #0
+    bl      puthex
+    bl      putnl
+
+    mov     x0, #0x89cd
+    bl      puthex
+    bl      putnl
+
     movz    x0, #0x0123, LSL 16
     movk    x0, #0x4567
     bl      puthex
     bl      putnl
+
     movz    x0, #0x0123, LSL 48
     movk    x0, #0x4567, LSL 32
     movk    x0, #0x89ab, LSL 16
     movk    x0, #0xcdef
     bl      puthex
     bl      putnl
-    mov     x0, #0x89cd
-    bl      puthex
-    bl      putnl
-    mov     x0, #0
+
+    ldr     x0, =0xfedcba9876543210
     bl      puthex
     bl      putnl
     bl      exit
