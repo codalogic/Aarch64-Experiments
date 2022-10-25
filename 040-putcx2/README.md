@@ -30,7 +30,7 @@ If we call another subroutine in this subroutine the `lr` register will get over
 program counter return address that call.  As we are going to call `write()` we need to store `lr`
 somewhere and the stack is the place to do it.
 
-To do that we do:
+To do that, remembering that the stack is grown downwards, towards lower memory, we do:
 
 ```asm
 stp     fp, lr, [sp,#-16]!
