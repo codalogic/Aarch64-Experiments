@@ -140,7 +140,7 @@ and the length of `2` in `x1`:
 
 ```asm
 add     x0, fp, #-2
-mov     x1, 2
+mov     x1, #2
 bl      _write
 ```
 

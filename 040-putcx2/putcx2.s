@@ -23,7 +23,7 @@ _putcx2:
 
     // Now call write() to write the 2 character string
     add     x0, fp, #-2
-    mov     x1, 2
+    mov     x1, #2
     bl      _write
 
     mov     sp, fp
