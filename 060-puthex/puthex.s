@@ -159,6 +159,10 @@ _start:
     bl      puthex
     bl      putnl
 
+    mov     x0, #-100
+    bl      puthex
+    bl      putnl
+
     movz    x0, #0x0123, LSL 16
     movk    x0, #0x4567
     bl      puthex
