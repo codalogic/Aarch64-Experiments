@@ -337,7 +337,6 @@ for loading large immediate values and the special instructions `rev` and `csel`
 
 I hope you enjoyed it.
 
-
 As usual, using the script, the program can be assembled and run using:
 
 ```asm
