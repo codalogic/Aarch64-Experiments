@@ -27,9 +27,9 @@ mov     x1, x0      // x0 -> x1
 (Note that it is important to do this in the right order!)
 
 In the Aarch64 Procedure Call Standard we can modify registers `x0` to `x15` as
-we choose.  But registers `x8` to `x30` should be returned to the calling function
+we choose.  But registers `x16` to `x30` should be returned to the calling function
 with the same data in that this function was called with.  (Some of the
-`x8` to `x30` registers have special uses and others we can use as we like as long
+`x16` to `x30` registers have special uses and others we can use as we like as long
 as we restore the initial values before we return from the subroutine.)
 
 The syscall requires us to put the syscall number in `x8`.  We therefore need to
