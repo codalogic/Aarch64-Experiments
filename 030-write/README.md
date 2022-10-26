@@ -26,7 +26,7 @@ mov     x1, x0      // x0 -> x1
 
 (Note that it is important to do this in the right order!)
 
-In the Aarch64 Procedure Call Standard we can modify registers `x0` to `x7` as
+In the Aarch64 Procedure Call Standard we can modify registers `x0` to `x15` as
 we choose.  But registers `x8` to `x30` should be returned to the calling function
 with the same data in that this function was called with.  (Some of the
 `x8` to `x30` registers have special uses and others we can use as we like as long
@@ -35,7 +35,7 @@ as we restore the initial values before we return from the subroutine.)
 The syscall requires us to put the syscall number in `x8`.  We therefore need to
 temporarily store its initial value before modifying it.
 
-We could temporarily store the `x8` register in one of the `x3` to `x7` registers that
+We could temporarily store the `x8` register in one of the `x3` to `x15` registers that
 we are allowed to modify but are not using in this subroutine.
 
 However, we can also temporarily store any register we want to modify and later restore by

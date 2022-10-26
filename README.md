@@ -51,6 +51,17 @@ and storing the result to the zero register, thus discarding it.
 The architecture also has 32 128-bit floating point registers, some 'house keeping' registers
 and the option of vector processor registers.  These are not discussed in this tutorial.
 
+The Arm Procedure Call standard specifies that `x0` to `x7` are used to pass parameters to a subroutine.
+`x8` is used to pass in a pointer to a location for returning large objects that can't be returned in `x0`.
+
+Once inside a subroutine, the values in `x0` to `x15` can be modified and do NOT have to be restored before
+returning to the caller.  However, if `x19` to `x28` are modified their values must be restored before
+returning to the caller.  `x16` to `x18` have special uses and are probably best left alone.
+`x29` and `x30` also have special uses as the 'Frame Pointer' and 'Link Register'.
+
+Values are returned to the caller in `x0` or, if the value won't fit in a register, in the location
+pointed to by `x8`.
+
 ## Useful Resources
 
 Learn the architecture - AArch64 Instruction Set Architecture - https://documentation-service.arm.com/static/62d02ce031ea212bb66273fe?token=

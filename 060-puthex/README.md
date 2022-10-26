@@ -38,19 +38,19 @@ puthex:
 ```
 
 We want to use some register while the subroutine is running, specifically
-`x11` as a temporary store and `x12` as a loop counter, so we
+`x19` as a temporary store and `x20` as a loop counter, so we
 store their initial values on the stack for later recovery.
 
 ```asm
-    stp     x11, x12, [sp,#-16]!
+    stp     x19, x20, [sp,#-16]!
 ```
 
 We need `x0` and `x1` to call subroutines so we need to put the input `x0`
 value somewhere where we can retrieve it after a subroutine call.  I've chosen
-to put it in `x11`.
+to put it in `x19`.
 
 ```asm
-    mov     x11, x0
+    mov     x19, x0
 ```
 
 Next we print the preamble string mentioned earlier using our `write` subroutine.
@@ -76,7 +76,7 @@ name local labels using the format: `.L_<subroutine name>_<local name>`.)
 
 ```asm
     // If the input value is 0, print "00" then jump to return
-    cmp     x11, 0
+    cmp     x19, 0
     b.ne    .L_puthex_1
     mov     x0, #'0'
     bl      putc
@@ -93,27 +93,27 @@ result would be `0xefcdab8967452301`.
 
 ```asm
 .L_puthex_1:
-    // Reverse the order of the bytes in x11
-    rev     x11, x11
+    // Reverse the order of the bytes in x19
+    rev     x19, x19
 ```
 
 A 64-bit register contains 8 bytes so we need to run the next loop
-8 times.  We're using `x12` to keep track of how many more loops we
+8 times.  We're using `x20` to keep track of how many more loops we
 need to do.
 
 ```asm
-    // There are 8 bytes in x11 so we have to do the below
+    // There are 8 bytes in x19 so we have to do the below
     // operation 8 times
-    mov     x12, #8
+    mov     x20, #8
 ```
 
 I want to skip leading zeros.
-If the least significant byte in `x11` is non-zero
+If the least significant byte in `x19` is non-zero
 branch to the main display code to display it.
 
 ```asm
 .L_puthex_2:
-    tst     x11, #0x0f
+    tst     x19, #0x0f
     bne     .L_puthex_3
 ```
 
@@ -122,8 +122,8 @@ and decrementing the loop count.  Then branch back to the check to
 see if the next byte is zero.
 
 ```asm
-    lsr     x11, x11, #8
-    subs    x12, x12, 1
+    lsr     x19, x19, #8
+    subs    x20, x20, 1
     bne     .L_puthex_2
     b       .L_puthex_exit  // Defensive - Shouldn't be possible
                             // to get here as value can't be zero
@@ -139,12 +139,12 @@ output the low nibble.
 ```asm
 .L_puthex_3:
     // Output top nibble of byte (note lsr)
-    mov     x0, x11
+    mov     x0, x19
     lsr     x0, x0, #4
     bl      puthexnibble
 
     // Output bottom nibble of byte
-    mov     x0, x11
+    mov     x0, x19
     bl      puthexnibble
 ```
 
@@ -152,11 +152,11 @@ Having output the hex for a byte, we move the next byte into the lower
 byte position using another `lsr` logical shift right.
 
 ```asm
-    lsr     x11, x11, #8
+    lsr     x19, x19, #8
 ```
 
 Time to work out if we have done enough loops.  We subtract `1` from our
-loop count stored in `x12`.  We have seen the `sub` instruction before
+loop count stored in `x20`.  We have seen the `sub` instruction before
 but this time we use the `subs` instruction.  Unlike `sub`, this updates the
 status register with the result of the subtraction.  If the result is zero
 the `z` zero flag will be set in the status register and we can test that
@@ -164,7 +164,7 @@ using the branch if not equal `b.ne` instruction.  If the count hasn't got to ze
 we loop back to display the next byte.
 
 ```asm
-    subs    x12, x12, 1
+    subs    x20, x20, 1
     b.ne    .L_puthex_3
 ```
 
@@ -174,7 +174,7 @@ postamble and do the `ret` subroutine return.
 
 ```asm
 .L_puthex_exit:
-    ldp     x11, x12, [sp]
+    ldp     x19, x20, [sp]
     mov     sp, fp
     ldp     fp, lr, [sp], #16
     ret

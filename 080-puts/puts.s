@@ -91,8 +91,8 @@ puthex:
 
     // We need x0 and x1 to call subroutines so put input x0
     // somewhere safe
-    str     x11, [sp,#-16]!
-    mov     x11, x0
+    stp     x19, x20, [sp,#-16]!
+    mov     x19, x0
 
     // Print "0x" to make it clear it's a hex value
     ldr     x0, =hex_preamble
@@ -100,8 +100,8 @@ puthex:
     bl      write
 
     // If the input value is 0, print "00" then jump to return
-    cmp     x11, 0
-    bne     .L_puthex_1
+    cmp     x19, 0
+    b.ne    .L_puthex_1
     mov     x0, #'0'
     bl      putc
     mov     x0, #'0'
@@ -109,43 +109,43 @@ puthex:
     b       .L_puthex_exit
 
 .L_puthex_1:
-    // Reverse the order of the bytes in x11
-    rev     x11, x11
-    // There are 8 bytes in x11 so we have to do the below
+    // Reverse the order of the bytes in x19
+    rev     x19, x19
+    // There are 8 bytes in x19 so we have to do the below
     // operation 8 times
-    mov     x12, #8
+    mov     x20, #8
 
 .L_puthex_2:
     // We want to skip leading zeros.
-    // If the least significant byte in x11 is non-zero
+    // If the least significant byte in x19 is non-zero
     // branch to display it, else shift in the next byte
     // and decrement the loop count
-    tst     x11, #0x0f
-    bne     .L_puthex_3
+    tst     x19, #0x0f
+    b.ne    .L_puthex_3
 
-    lsr     x11, x11, #8
-    subs    x12, x12, 1
+    lsr     x19, x19, #8
+    subs    x20, x20, 1
     bne     .L_puthex_2
     b       .L_puthex_exit  // Defensive - Shouldn't be possible
                             // to get here as value can't be zero
 
 .L_puthex_3:
     // Output top nibble of byte (note lsr)
-    mov     x0, x11
+    mov     x0, x19
     lsr     x0, x0, #4
     bl      puthexnibble
 
     // Output bottom nibble of byte
-    mov     x0, x11
+    mov     x0, x19
     bl      puthexnibble
 
     // See if we've finished
-    lsr     x11, x11, #8
-    subs    x12, x12, 1
+    lsr     x19, x19, #8
+    subs    x20, x20, 1
     bne     .L_puthex_3
 
 .L_puthex_exit:
-    ldr     x11, [sp]
+    ldp     x19, x20, [sp]
     mov     sp, fp
     ldp     fp, lr, [sp], #16
     ret

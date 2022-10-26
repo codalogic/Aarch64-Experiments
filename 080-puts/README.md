@@ -16,10 +16,10 @@ puts:
 ```
 
 The pointer to the string, which is initially stored in `x0`, will be passed to both
-`strlen` and `write`.  Called subroutines are allowed to corrupt the `x0` to `x7`
+`strlen` and `write`.  Called subroutines are allowed to corrupt the `x0` to `x15`
 registers so we need to put it somewhere safe so we can get it back after the
-subroutine call.  Therefore we put it on the stack.  (If we decided to put it in, say, `x11`
-we'd have to first write `x11` to the stack because we have to return registers `x8` to `x29`
+subroutine call.  Therefore we put it on the stack.  (If we decided to put it in, say, `x20`
+we'd have to first write `x20` to the stack because we have to return registers `x19` to `x29`
 to the calling subroutine unmodified.  Therefore putting `x0` on the stack directly is easier.)
 
 ```asm
