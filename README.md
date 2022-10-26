@@ -57,7 +57,7 @@ Learn the architecture - AArch64 Instruction Set Architecture - https://document
 
 ARMv8 A64 Quick Reference - https://courses.cs.washington.edu/courses/cse469/18wi/Materials/arm64.pdf
 
-GAS Assembler directives - https://sourceware.org/binutils/docs/as/Pseudo-Ops.html
+GAS Assembler manual - https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_chapter/as_toc.html
 
 Arm64 syscalls - https://arm64.syscall.sh/
 
