@@ -228,4 +228,17 @@ exit:
 _start:
     ldr     x0, =msg
     bl      puts
+
+            .text 1
+            0: .asciz "Goodbye for now!\n"
+            .text
+    ldr     x0, =0b
+    bl      puts
+
+            .text 1
+            0: .asciz "So bye, bye!\n"
+            .text
+    ldr     x0, =0b
+    bl      puts
+
     b       exit
