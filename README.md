@@ -9,7 +9,8 @@ evolution is clear and you can follow the growth of the code.  I've numbered the
 directories so you can easily see the order.  I've gone up in jumps of 10 in case
 it later occurs to me to add an intermediate step!
 
-I run this on a Raspbery Pi 4 running Ubuntu.
+I run this on a Raspbery Pi 4 running Ubuntu but it should work on any distro that
+can use the GCC tool chain.
 
 I use the GNU assembler: GAS.  To get these tools do:
 
@@ -57,7 +58,8 @@ The Arm Procedure Call standard specifies that `x0` to `x7` are used to pass par
 Once inside a subroutine, the values in `x0` to `x15` can be modified and do NOT have to be restored before
 returning to the caller.  However, if `x19` to `x28` are modified their values must be restored before
 returning to the caller.  `x16` to `x18` have special uses and are probably best left alone.
-`x29` and `x30` also have special uses as the 'Frame Pointer' and 'Link Register'.
+`x29` and `x30` also have special uses as the 'Frame Pointer' and 'Link Register', the use of which is discussed
+in the exercises.
 
 Values are returned to the caller in `x0` or, if the value won't fit in the register, in the location
 pointed to by `x8`.
