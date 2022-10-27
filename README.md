@@ -2,7 +2,7 @@
 
 Experiments with Arm Aarch64 / Arm64 Assembly Code
 
-The intent is to build up some code that will act as an introduction to
+The intent of this repo is to build up some code that will act as an introduction to
 Aarch64/Arm64 programming.  Each program will build on the previous program
 but each step will be stored in a separate directory so that the
 evolution is clear and you can follow the growth of the code.  I've numbered the
@@ -19,7 +19,7 @@ sudo apt upgrade
 sudo apt install gcc
 ```
 
-To more easily build the code I've created a bash file called `aarch64` that contains:
+To more easily build each program I've created a bash file called `aarch64` that contains:
 
 ```bash
 as -o $1.o $1.s && ld -o $1 $1.o && ./$1
@@ -30,21 +30,21 @@ as -o $1.o $1.s && ld -o $1 $1.o && ./$1
 For example, to build the code in the first example, which is called `exit`, do:
 
 ```bash
-aarch64 exit
+../aarch64 exit
 ```
 
 ## Overview of Aarch64
 
-The Arm 64-bit architecture as 31 64-bit registers named `x0` to `x30`.  32-bit operations 
-can be done on these registers by referring to the registers as `w0` to `w30`.
+The Arm 64-bit architecture has 31 64-bit registers named `x0` to `x30`.  32-bit operations 
+can also be done on these registers by referring to the registers as `w0` to `w30`.
 
 The stack pointer and the zero register take the place of what would be `x31`.  Depending on the
 instrution used, when the instruction encodes register `11111` (31) either the stack pointer or the zero
 register will be accessed.
 
-The zero register allows instructs to have zero valued inputs and to be able to discard
+The zero register allows instructions to have zero valued inputs and to be able to discard the
 results of computations.  For example, register to register `mov` instructions are done
-by adding (via `add`) the zero register to a register and storing the result in the target register.
+by using the `add` opcode to add the zero register to a register and storing the result in the target register.
 `cmp` comparison instructions are performed by subtracting the content of two registers
 and storing the result to the zero register, thus discarding it.
 
@@ -59,7 +59,7 @@ returning to the caller.  However, if `x19` to `x28` are modified their values m
 returning to the caller.  `x16` to `x18` have special uses and are probably best left alone.
 `x29` and `x30` also have special uses as the 'Frame Pointer' and 'Link Register'.
 
-Values are returned to the caller in `x0` or, if the value won't fit in a register, in the location
+Values are returned to the caller in `x0` or, if the value won't fit in the register, in the location
 pointed to by `x8`.
 
 ## Useful Resources
