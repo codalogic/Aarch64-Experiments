@@ -58,8 +58,7 @@ strnlen_s:
     // Load byte pointed to by x0 ready and test if it is zero
     // Branch to exit if it is 0
     ldrb    w3, [x0], #+1
-    cmp     x3, #0
-    b.eq    .L_strnlen_s_exit
+    cbz     x3, .L_strnlen_s_exit
 
     // Record we have another byte
     add     x2, x2, 1

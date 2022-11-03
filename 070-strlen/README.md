@@ -62,13 +62,20 @@ are not allowed to corrupt.  Therefore we don't need any stack preamble.
 Now we start the main loop.
 
 We load the byte pointed to by `x0` into `w3`, post-incrementing the value in `x0` by `1` and
-then test the loaded byte to see if it is zero.  If it is we branch to the exit code.
+then testing the loaded byte to see if it is zero using the `cbz` (Compare and Branch on Zero) instruction.
+If it is we branch to the exit code.
 
 ```asm
 .L_strnlen_s_main_loop:
     // Load byte pointed to by x0 ready and test if it is zero
     // Branch to exit if it is 0
     ldrb    w3, [x0], #+1
+    cbz     x3, .L_strnlen_s_exit
+```
+
+In the above the `cbz` instruction (Compare and Branch on Zero) is equivalent to:
+
+```asm
     cmp     x3, #0
     b.eq    .L_strnlen_s_exit
 ```
